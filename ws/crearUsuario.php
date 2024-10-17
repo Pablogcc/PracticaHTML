@@ -8,24 +8,15 @@ require_once './models/User.php';
     $telefono = $_POST['telefono'] ??'';
     $email = $_POST['email'] ??'';
     $sexo = $_POST['sexo'] ??'';
-    
-
-
 
 
     $user = new User($nombre, $apellidos, $contrasena, $telefono, $email, $sexo);
+    
+    $almacenar = $nombre . ', ' . $apellidos . ', ' . $contrasena . ', ' . $telefono . ', ' . $email . ', ' . $sexo . PHP_EOL;
+    file_put_contents('user.txt', $almacenar, FILE_APPEND);
+
+
     echo $user->toJson();
-
-
-
-
-
-
-
-
-
-
-
 
 
 
