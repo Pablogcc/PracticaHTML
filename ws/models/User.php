@@ -1,6 +1,7 @@
 <?php
 
-class User {
+    require_once 'interfaces/IToJson.php';
+class User implements IToJson {
 
     public $nombre;
     public $apellidos;
