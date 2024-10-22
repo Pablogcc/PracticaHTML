@@ -1,5 +1,5 @@
 <?php
-
+// Aquí en el require_once, en vez de poner "./" debes de poner "interfaces/", porque si no, no funciona
     require_once 'interfaces/IToJson.php';
 class User implements IToJson {
 
@@ -68,6 +68,8 @@ class User implements IToJson {
         $this->sexo = $sexo;
     }
 
+
+// El json_ENCODE hace que lo que le pases se convierta en un .json y se pueda enviar al archivo
     public function toJson(){
         return json_encode([
             "nombre"=> $this->nombre,
@@ -76,7 +78,7 @@ class User implements IToJson {
             "telefono"=> $this->telefono,
             "email"=> $this->email,
             "sexo"=> $this->sexo
-        ]);
+    ]);
     }
 
 
