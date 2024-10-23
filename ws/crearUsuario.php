@@ -10,7 +10,7 @@ $telefono = $_POST['telefono'] ?? '';
 $email = $_POST['email'] ?? '';
 $sexo = $_POST['sexo'] ?? '';
 
-
+// Este user sirve para que salgan después al rellenar todos los campos por pantalla
 $user = new User($nombre, $apellidos, $contrasena, $telefono, $email, $sexo);
 
 
