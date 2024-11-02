@@ -1,6 +1,6 @@
 <?php
 // Aquí en el require_once, en vez de poner "./" debes de poner "interfaces/", porque si no, no funciona
-    require_once 'interfaces/IToJson.php';
+require_once 'interfaces/IToJson.php';
 class User implements IToJson {
 
     public $nombre;
@@ -78,7 +78,7 @@ class User implements IToJson {
             "telefono"=> $this->telefono,
             "email"=> $this->email,
             "sexo"=> $this->sexo
-    ]);
+        ]);
     }
 
 
