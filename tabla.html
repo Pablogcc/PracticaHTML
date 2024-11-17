@@ -15,55 +15,76 @@
     <a href="titulos.html">Títulos</a>
     <a href="imagenes.html">Imágenes</a>
 
-    <br>
-    <br>
-    <br>
+    <br><br><br>
+
+    <!--Input para filtrar-->
+    <input type="text" id="filtrar" placeholder="Buscar nombre o apellido...">
 
     <form action="#">
         <table border="1">
-
             <tr>
-
-                <td><label for="nombre">Nombre:</label></td>
-                <td><input type="text" id="nombre" name="nombre"></td>
-
+                <th>Campo</th>
+                <th>Escribir</th>
+                
             </tr>
             <tr>
-
+                <td><label for="nombre">Nombre:</label></td>
+                <td><input type="text"  name="nombre"></td>
+            </tr>
+            <tr>
                 <td><label for="apellidos">Apellidos:</label></td>
                 <td><input type="text" id="apellidos" name="apellidos"></td>
-
             </tr>
             <tr>
-
                 <td><label for="telefono">Teléfono:</label></td>
                 <td><input type="tel" id="telefono" name="telefono"></td>
-
             </tr>
             <tr>
-
                 <td><label for="email">Email:</label></td>
                 <td><input type="email" id="email" name="email"></td>
-
             </tr>
             <tr>
-
                 <td><label>Sexo:</label></td>
                 <td>
                     <input type="radio" id="masculino" name="sexo" value="masculino">
                     <label for="masculino">Masculino</label>
                     <input type="radio" id="femenino" name="sexo" value="femenino">
                     <label for="femenino">Femenino</label>
-
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+              <td>
                     <input type="submit" value="Enviar">
-                </td>
+                </td> 
             </tr>
         </table>
     </form>
+
+    <h2>Lista de Usuarios</h2>
+    <table id="tabla" border="1">
+        <!--El thead sirve para que el contenido que haya dentro se pomga de cabecera en la tabla que hayas creado-->
+        <thead>
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Sexo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+
+        <!--El tbody sirve para agrupar todos los usuarios en la tabla-->
+        <tbody>
+            <!-- Aquí se llenaran las filas cuando tu lo rellenes y envies la tabla -->
+        </tbody>
+    </table>
+
+
+
+
+    <script defer src="./js/tabla.js"></script>
 </body>
 
 </html>

@@ -11,13 +11,19 @@ class User implements IToJson {
 
     public $sexo;
 
-    public function __construct($nombre, $apellidos, $contrasena, $telefono, $email, $sexo) {
+    public $fecha_nacimiento;
+
+    public $id;
+
+    public function __construct($nombre, $apellidos, $contrasena, $telefono, $email, $sexo, $fecha_nacimiento, $id) {
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->contrasena=$contrasena;
         $this->telefono = $telefono;
         $this->email = $email;
         $this->sexo = $sexo;
+        $this->fecha_nacimiento = $fecha_nacimiento;
+        $this->id = $id;
     }
 
     public function getNombre() {
@@ -44,6 +50,15 @@ class User implements IToJson {
         return $this->sexo;
     }
 
+    public function getFecha_nacimiento(){
+        return $this->fecha_nacimiento;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+
     public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
@@ -68,6 +83,13 @@ class User implements IToJson {
         $this->sexo = $sexo;
     }
 
+    public function setFecha_nacimiento($fecha_nacimiento){
+        $this->fecha_nacimiento = $fecha_nacimiento;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
 
 // El json_ENCODE hace que lo que le pases se convierta en un .json y se pueda enviar al archivo
     public function toJson(){
@@ -77,7 +99,9 @@ class User implements IToJson {
             "contrasena"=> $this->contrasena,
             "telefono"=> $this->telefono,
             "email"=> $this->email,
-            "sexo"=> $this->sexo
+            "sexo"=> $this->sexo,
+            "fecha_nacimiento"=> $this->fecha_nacimiento,
+            "id" => $this->id
         ]);
     }
 
