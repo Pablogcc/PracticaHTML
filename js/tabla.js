@@ -48,14 +48,29 @@ function cargarDatos() {
         fila.appendChild(elSexo);
 
         // Creamos y añadimos el botón de eliminar
-        const celdaEliminar = document.createElement('td');
+        
+        const celdaAccion = document.createElement('td');
+
         const botonEliminar = document.createElement('button');
+        
         botonEliminar.textContent = 'X';
         botonEliminar.classList.add('eliminar');
         // Aquí crea el botón con la "X" para que al pulsarle se elimine
-        celdaEliminar.appendChild(botonEliminar);
+        celdaAccion.appendChild(botonEliminar);
         // Aquí crea la celda para la "X" de eliminar el ususario
-        fila.appendChild(celdaEliminar);
+       // celdaAccion.appendChild(celdaEliminar);
+
+        //------------------
+        const botonModificar = document.createElement('button');
+
+        botonModificar.textContent = 'Modificar';
+        botonModificar.classList.add('modificar');
+
+        celdaAccion.appendChild(document.createTextNode(' '));
+        celdaAccion.appendChild(botonModificar);
+
+
+        fila.appendChild(celdaAccion);
 
         // Añadimos la fila de dicho usuario a la tabla
         tabla.appendChild(fila);
@@ -94,9 +109,86 @@ document.getElementById('filtrar').addEventListener('input', (input) => {
     });
 
      
-     // Aquí pasa por todas las filas y pone las filtradas por el buscador, si no se quita
+    
     filas.forEach(fila => {
         fila.style.display = filasFiltro.includes(fila) ? '' : 'none';
     });
 });
+
+//-----------------------
+
+
+document.querySelector('#tabla').onclick = function (event) {
+    // Aquí se verifica si existe modificar
+    if (event.target.classList.contains('modificar')) {
+        // quí hace que se seleccione el ususario y se ponga en formulario
+       const fila = event.target.closest('tr');
+        const celdas = fila.querySelectorAll('td');
+        
+        
+        document.querySelector('input[name="nombre"]').value = celdas[0].textContent;
+        document.querySelector('input[name="apellidos"]').value = celdas[1].textContent;
+        document.querySelector('input[name="telefono"]').value = celdas[2].textContent;
+        document.querySelector('input[name="email"]').value = celdas[3].textContent;
+        
+        
+        const sexo = celdas[4].textContent;
+        document.querySelector(`input[name="sexo"][value="${sexo}"]`).checked = true;
+        
+        // Aquí guarda el índice de la fila en un atributo
+        fila.dataset.index = Array.from(fila.parentNode.children).indexOf(fila);
+    }
+};
+
+
+
+
+
+document.getElementById('guardar').onclick = function () {
+    // Busca el elemento que se ha seleccionado al darle a modificar y luego se ha puesto en el formulario
+    const fila = document.querySelector('[data-index]'); 
+    
+    if (fila) {
+        // Aquí obtiene la fila de dicho usuario
+        const index = fila.dataset.index; 
+
+        // Aquí se obtiene los valores del formulario 
+        const nombre = document.querySelector('input[name="nombre"]').value;
+        const apellidos = document.querySelector('input[name="apellidos"]').value;
+        const telefono = document.querySelector('input[name="telefono"]').value;
+        const email = document.querySelector('input[name="email"]').value;
+        const sexo = document.querySelector('input[name="sexo"]:checked').value;
+
+        // Aquí se actualizan los datos cambiados
+        datosCampos[index] = { nombre, apellidos, telefono, email, sexo };
+        const celdas = fila.querySelectorAll('td');
+        celdas[0].textContent = nombre;
+        celdas[1].textContent = apellidos;
+        celdas[2].textContent = telefono;
+        celdas[3].textContent = email;
+        celdas[4].textContent = sexo;
+
+        
+        
+
+        alert('El usuario se ha editato');
+    } else {
+        alert('No se pillado ningún usuario para editar.');
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

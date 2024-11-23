@@ -1,12 +1,5 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Método no permitido. Por favor, usa PUT.'
-    ]);
-    exit;
-}
 
 
 
@@ -63,6 +56,7 @@ if (!$id) {
         $response = [
             'success' => $actualizacionExitosa,
             'message' =>  'Usuario actualizado correctamente',
+            'asdas' => $declaracion->rowCount(),
             'data' => [
                 'id' => $user->getId(),
                 'nombre' => $user->getNombre(),
