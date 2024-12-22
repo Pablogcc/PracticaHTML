@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formulario</title>
+    <title>Formulario2</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -17,59 +18,98 @@
     <br />
     <br />
 
-    <!--Aquí en el formulario, en el action lo conectas con el archivo de php y usas el method post-->
-    <!--Usamos el id para modificarlo-->
-    <form action="./ws/modificarUsuario.php" method="POST">
+    <!-- Aquí en el formulario, en el action lo conectas con el archivo de php y usas el method POST -->
+    <!-- Usamos el id para modificarlo -->
+    <form id="formUsuario" method="POST">
       <label for="id">ID: </label>
-      <input type="number" id="id" name="id" />
+      <input type="number" id="id" name="id" required />
 
       <br />
       <br />
 
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" />
+      <input type="text" id="nombre" name="nombre" required />
 
       <br />
       <br />
 
       <label for="apellidos">Apellidos:</label>
-      <input type="text" id="apellidos" name="apellidos" />
+      <input type="text" id="apellidos" name="apellidos" required />
 
       <br />
       <br />
 
       <label for="contrasena">Contraseña:</label>
-      <input type="password" id="contrasena" name="contrasena" />
+      <input type="password" id="contrasena" name="contrasena" required />
 
       <br />
       <br />
 
       <label for="telefono">Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono" />
+      <input type="tel" id="telefono" name="telefono" required />
 
       <br />
       <br />
 
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" />
+      <input type="email" id="email" name="email" required />
 
       <br />
       <br />
 
       <label>Sexo:</label>
-      <input type="radio" id="masculino" name="sexo" value="masculino" />
+      <input type="radio" id="masculino" name="sexo" value="masculino" required />
       <label for="masculino">Masculino</label>
 
-      <input type="radio" id="femenino" name="sexo" value="femenino" />
+      <input type="radio" id="femenino" name="sexo" value="femenino" required />
       <label for="femenino">Femenino</label><br /><br />
 
       <br />
       <br />
 
       <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" />
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
 
-      <button type="submit">Enviar</button>
+      <button type="submit" id="confirmar">Enviar</button>
     </form>
+
+    <script>
+      document.getElementById('formUsuario').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevenir el envío tradicional del formulario
+    
+        const formData = new FormData(this);
+    
+        Swal.fire({
+          title: '¿Quieres crear este usuario?',
+          text: 'Vas a registrar un nuevo usuario.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, crear usuario',
+          cancelButtonText: 'No crear usuario',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            fetch('crearUsuario2.php', {
+              method: 'POST',
+              body: formData,
+            })
+              .then((response) => response.json()) 
+              .then((data) => {
+                if (data.status === 'success') {
+                  Swal.fire('Éxito', data.message, 'success');
+                  
+                  document.getElementById('formUsuario').reset();
+                } else {
+                  Swal.fire('Error', data.message, 'error');
+                }
+              })
+              .catch((error) => {
+                Swal.fire('Error', 'Hubo un problema al crear el usuario.', 'error');
+              });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

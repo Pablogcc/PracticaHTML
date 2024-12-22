@@ -2,7 +2,7 @@
 // Aquí se asegura que el documento esté totalmente cargado, por eso se utiliza "DOMContentLoaded"
 document.addEventListener("DOMContentLoaded", () => {
     //Aquí se solicita los datos del nav.html con el fetch, es decir, su código html
-  fetch("nav.html")
+    fetch("nav.html")
     .then((res) => res.text())
     //Aquí se ejecuta con el html ya cargado
     .then((html) => {

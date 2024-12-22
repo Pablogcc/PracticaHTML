@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabla</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -81,7 +82,57 @@
         </tbody>
     </table>
 
-
+    <script>
+        // Función para cargar los usuarios desde el archivo getUsuarios.php
+        async function cargarUsuarios() {
+          try {
+            // Realizamos la llamada asíncrona
+            const response = await fetch('./ws/getUsuarios.php');
+            
+            // Comprobamos si la respuesta es válida (status 200)
+            if (response.ok) {
+              const data = await response.json();
+              
+              // Comprobamos si la respuesta contiene datos
+              if (data.success && data.data) {
+                // Limpiamos el cuerpo de la tabla antes de llenarla
+                const tbody = document.querySelector("#tabla tbody");
+                tbody.innerHTML = ''; // Limpiamos las filas existentes
+      
+                // Recorremos los usuarios obtenidos y los añadimos a la tabla
+                data.data.forEach(usuario => {
+                  const row = document.createElement('tr');
+                  row.dataset.index = usuario.id; // Establecemos el índice como el ID del usuario
+      
+                  // Añadimos las celdas con los datos del usuario
+                  row.innerHTML = `
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellidos}</td>
+                    <td>${usuario.telefono}</td>
+                    <td>${usuario.email}</td>
+                    <td>${usuario.sexo}</td>
+                    <td>
+                      <button class="editar" onclick="editarUsuario(${usuario.id})">Editar</button>
+                      <button class="eliminar" onclick="eliminarUsuario(${usuario.id})">Eliminar</button>
+                    </td>
+                  `;
+                  tbody.appendChild(row); // Añadimos la fila a la tabla
+                });
+              } else {
+                console.error('No se encontraron usuarios');
+              }
+            } else {
+              console.error('Error al obtener los usuarios:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error al hacer la solicitud:', error);
+          }
+        }
+      
+        // Llamamos a la función para cargar los usuarios cuando se cargue la página
+        window.onload = cargarUsuarios;
+      </script>
+      
 
 
     <script defer src="./js/tabla.js"></script>
