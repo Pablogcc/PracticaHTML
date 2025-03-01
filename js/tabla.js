@@ -162,108 +162,126 @@ document.querySelector("#tabla").onclick = function (event) {
   }
 };
 
-
 document.getElementById("guardar").onclick = function () {
   Swal.fire({
-      title: '¿Guardar cambios?',
-      text: 'Se actualizarán los datos del usuario seleccionado.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, guardar',
-      cancelButtonText: 'Cancelar',
+    title: "¿Guardar cambios?",
+    text: "Se actualizarán los datos del usuario seleccionado.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sí, guardar",
+    cancelButtonText: "Cancelar",
   }).then((result) => {
-      if (result.isConfirmed) {
-          const fila = document.querySelector("[data-index]"); 
+    if (result.isConfirmed) {
+      const fila = document.querySelector("[data-index]");
 
-          if (fila) {
-              const id = fila.dataset.id;
+      if (fila) {
+        const id = fila.dataset.id;
 
-              const formData = new FormData();
-              formData.append('id', id);
-              formData.append('nombre', document.querySelector('input[name="nombre"]').value);
-              formData.append('apellidos', document.querySelector('input[name="apellidos"]').value);
-              formData.append('telefono', document.querySelector('input[name="telefono"]').value);
-              formData.append('email', document.querySelector('input[name="email"]').value);
-              formData.append('sexo', document.querySelector('input[name="sexo"]:checked').value);
-              formData.append('fecha_nacimiento', document.querySelector('input[name="fecha_nacimiento"]').value);
+        const formData = new FormData();
+        formData.append("id", id);
+        formData.append(
+          "nombre",
+          document.querySelector('input[name="nombre"]').value
+        );
+        formData.append(
+          "apellidos",
+          document.querySelector('input[name="apellidos"]').value
+        );
+        formData.append(
+          "telefono",
+          document.querySelector('input[name="telefono"]').value
+        );
+        formData.append(
+          "email",
+          document.querySelector('input[name="email"]').value
+        );
+        formData.append(
+          "sexo",
+          document.querySelector('input[name="sexo"]:checked').value
+        );
+        formData.append(
+          "fecha_nacimiento",
+          document.querySelector('input[name="fecha_nacimiento"]').value
+        );
 
-              fetch('modificarUsuario.php', {
-                  method: 'POST',
-                  body: formData,
-              })
-              .then((response) => response.json())
-              .then((data) => {
-                  if (data.success) {
-                      Swal.fire('Guardado', data.message, 'success');
+        fetch("modificarUsuario.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              Swal.fire("Guardado", data.message, "success");
 
-                      const celdas = fila.querySelectorAll("td");
-                      celdas[0].textContent = formData.get('nombre');
-                      celdas[1].textContent = formData.get('apellidos');
-                      celdas[2].textContent = formData.get('telefono');
-                      celdas[3].textContent = formData.get('email');
-                      celdas[4].textContent = formData.get('sexo');
-                      if (celdas.length > 5) {
-                          celdas[5].textContent = formData.get('fecha_nacimiento');
-                      }
+              const celdas = fila.querySelectorAll("td");
+              celdas[0].textContent = formData.get("nombre");
+              celdas[1].textContent = formData.get("apellidos");
+              celdas[2].textContent = formData.get("telefono");
+              celdas[3].textContent = formData.get("email");
+              celdas[4].textContent = formData.get("sexo");
+              if (celdas.length > 5) {
+                celdas[5].textContent = formData.get("fecha_nacimiento");
+              }
 
-                      document.querySelector('form').reset();
-                      fila.removeAttribute('data-index');
-                      fila.removeAttribute('data-id');
-                  } else {
-                      Swal.fire('Error', data.message, 'error');
-                  }
-              })
-              .catch(() => Swal.fire('Error', 'No se pudo guardar el usuario.', 'error'));
-          } else {
-              Swal.fire('Error', 'Selecciona un usuario para editar.', 'error');
-          }
+              document.querySelector("form").reset();
+              fila.removeAttribute("data-index");
+              fila.removeAttribute("data-id");
+            } else {
+              Swal.fire("Error", data.message, "error");
+            }
+          })
+          .catch(() =>
+            Swal.fire("Error", "No se pudo guardar el usuario.", "error")
+          );
+      } else {
+        Swal.fire("Error", "Selecciona un usuario para editar.", "error");
       }
+    }
   });
 };
-
-
 
 document.getElementById("borrar").onclick = function () {
   Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'El usuario será eliminado de forma permanente.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, borrar',
-      cancelButtonText: 'Cancelar',
+    title: "¿Estás seguro?",
+    text: "El usuario será eliminado de forma permanente.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, borrar",
+    cancelButtonText: "Cancelar",
   }).then((result) => {
-      if (result.isConfirmed) {
-          const fila = document.querySelector("[data-index]"); 
+    if (result.isConfirmed) {
+      const fila = document.querySelector("[data-index]");
 
-          if (fila) {
-              const id = fila.dataset.id;
+      if (fila) {
+        const id = fila.dataset.id;
 
-              const formData = new FormData();
-              formData.append('id', id);
+        const formData = new FormData();
+        formData.append("id", id);
 
-              fetch('deleteUser.php', {
-                  method: 'POST',
-                  body: formData,
-              })
-              .then((response) => response.json())
-              .then((data) => {
-                  if (data.success) {
-                      Swal.fire('Eliminado', data.message, 'success');
+        fetch("deleteUser.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              Swal.fire("Eliminado", data.message, "success");
 
-                      fila.remove();
+              fila.remove();
 
-                      document.querySelector('form').reset();
-                  } else {
-                      Swal.fire('Error', data.message, 'error');
-                  }
-              })
-              .catch(() => Swal.fire('Error', 'No se pudo borrar el usuario.', 'error'));
-          } else {
-              Swal.fire('Error', 'Selecciona un usuario para borrar.', 'error');
-          }
+              document.querySelector("form").reset();
+            } else {
+              Swal.fire("Error", data.message, "error");
+            }
+          })
+          .catch(() =>
+            Swal.fire("Error", "No se pudo borrar el usuario.", "error")
+          );
+      } else {
+        Swal.fire("Error", "Selecciona un usuario para borrar.", "error");
       }
+    }
   });
 };
-
